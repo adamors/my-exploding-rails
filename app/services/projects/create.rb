@@ -3,14 +3,8 @@ module Projects
     include Dry::Transaction
     include MyExplodingRails::Import['project_repo']
 
-    step :read
-    map :persists
-
-    def call(data)
-      validated_data = yield validate(data)
-
-      persists(validated_data)
-    end
+    step :validate
+    map :persist
 
     def validate(input)
       validation = ProjectSchema.call(input)
@@ -21,7 +15,7 @@ module Projects
       end
     end
 
-    def persists(input)
+    def persist(input)
       project = project_repo.create(input)
     end
   end
