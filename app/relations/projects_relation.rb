@@ -1,0 +1,9 @@
+class ProjectsRelation < ROM::Relation[:sql]
+  gateway :default
+
+  schema(:projects, infer: true)
+
+  def all
+    select(:id, :name).order(:id)
+  end
+end
